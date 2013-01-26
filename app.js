@@ -31,6 +31,8 @@ app.configure('production', function(){
 app.get('/', ui.index);
 app.get('/api/1/me/analyse/items', analyse.getitems)
 app.post('/api/1/item', api.addItem);
+app.post('/api/1/me/items', api.addItems);
+app.get('/api/1/me/items', api.getItems);
 
 app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
