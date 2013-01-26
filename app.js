@@ -28,6 +28,7 @@ app.configure('production', function(){
 
 // routes
 app.get('/', ui.index);
+app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 app.get('/api/1/me/items', api.getItems);
 
