@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p><a href="/me/procedures/all">View totals of all procedures</a></p>
-  </body>
+	<head>
+		<title>My Quicklog</title>
+		<link href="/stylesheets/style.css" rel="stylesheet"/>
+		<link href="/stylesheets/xcharts.min.css" rel="stylesheet"/>
+		<script src="/javascript/jquery-1.8.0.min.js"></script>
+	    <script src="/javascript/xcharts.min.js"></script>
+	    <script src="/javascript/d3.v3.min.js"></script>
+	    <script src="/javascript/quicklog.js"></script>
+	</head>
+	<body>
+		<h1>My Quicklog</h1>
+
+		<select id="tag" />
+		</select>
+
+		<figure id="procedurebytag" style="height:500px;"></figure>		
+
+		<script>
+			documentReady();
+		</script>
+
+	</body>
 </html>
