@@ -1,4 +1,30 @@
 var timechart;
+var timechart2;
+
+var createTimeChart2 = function(tag, data) {
+	
+	timechart2 = new Highcharts.StockChart({
+		chart : {
+			renderTo : 'container'
+		},
+
+		rangeSelector : {
+			selected : 1
+		},
+
+		title : {
+			text : 'Number of procedures'
+		},
+		
+		series : [{
+			name : tag,
+			data : data,
+			tooltip: {
+				valueDecimals: 0
+			}
+		}]
+	});
+};
 
 var createTimeChart = function() {
 	var data = {
@@ -25,19 +51,7 @@ var getItemsForTag = function() {
 	var tag = $("#tag").val(); 
 
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(responseData) {
-
-		var data = {
-		  "xScale": "time",
-		  "yScale": "linear",
-		  "type": "line",
-		  "main": [
-		    {
-		      "data": responseData
-		    }
-		  ]
-		};
-
-		timechart.setData(data);
+		createTimeChart2(tag, responseData);
 	});
 
 };
@@ -58,7 +72,6 @@ var getItems = function(done) {
 var documentReady = function() {
 	$(document).ready(function() {
 
-		createTimeChart();
 		getItems(getItemsForTag);
 
 		$('#tag').change(function() {
