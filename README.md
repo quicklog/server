@@ -1,4 +1,3 @@
-server
-======
+# Quicklog Server
 
 Server side for quicklog
