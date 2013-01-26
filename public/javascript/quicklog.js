@@ -47,7 +47,7 @@ var getItems = function(done) {
 	$.getJSON('/api/1/me/analyse/items', function(items) {
 		$.each(items, function(i, item) {
 			var tag = item.x;
-			$('#tag').append('<option value="' + tag + '">' + tag + '</option>');
+			$('#tag').append('<option value="' + tag + '">' + tag + ' (' + item.y + ')</option>');
 		});
 
 		done();
