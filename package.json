@@ -3,7 +3,9 @@
     "version": "0.0.1",
     "dependencies": {
       "express": "2.5.8",
-      "ejs" : "*"
+      "ejs" : "*",
+      "mongodb" : "1.2.10",
+      "node-uuid" : "1.4.0"
   },
     "devDependencies": {
         "mocha": "1.4.2",
