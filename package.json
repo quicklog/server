@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "dependencies": {
       "express": "*",
+      "ejs" : "*",
       "mongodb" : "1.2.10",
       "node-uuid" : "1.4.0"
   },
