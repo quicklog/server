@@ -20,40 +20,26 @@ exports.addItems = function(req, res) {
   }
 
   var item = items[0];
-  var id = token + '_' + item.id;
 
-  data.getCollection('items', function(e, items) {
+  data.addItem(token, item, function(e) {
     if(e) {
       console.error(e);
       return res.send(500);
     }
-
-    items.update({ _id: id }, { "$set" : item }, { upsert: true }, function(e) {
+    data.addAllCounts(token, item, function(e) {
       if(e) {
         console.error(e);
         return res.send(500);
       }
-      res.send(200);
+
+      return res.send(200);
     });
   });
 };
 
 exports.getItems = function(req, res) {
   console.log('getItems');
-  var items = [ {
-    id: '1',
-    tags: ['tag1', 'tag2'],
-    comment: 'a comment',
-    rating: 5,
-    timestamp: new Date().getTime()
-  },
-  {
-    id: '2',
-    tags: ['tag1', 'tag2'],
-    comment: 'another comment',
-    rating: 3,
-    timestamp: new Date().getTime()
-  }
+  var items = [
   ];
   res.send(items);
 };
