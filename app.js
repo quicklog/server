@@ -5,7 +5,8 @@
 
 var express = require('express'),
       api = require('./routes/api.js'),
-      ui = require('./routes/ui.js');
+      ui = require('./routes/ui.js'),
+      analyse = require('./routes/analyse.js');
 
 var app = module.exports = express.createServer();
 
@@ -28,6 +29,7 @@ app.configure('production', function(){
 
 // routes
 app.get('/', ui.index);
+app.get('/api/1/me/analyse/items', analyse.getitems)
 app.post('/api/1/item', api.addItem);
 
 app.listen(process.env.PORT || 3000, function(){
