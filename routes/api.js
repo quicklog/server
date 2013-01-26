@@ -1,3 +1,7 @@
+exports.register = function(req, res) {
+  res.send(200);
+};
+
 exports.addItems = function(req, res) {
   console.log('addItem');
   console.log(req);
