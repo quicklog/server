@@ -25,10 +25,11 @@ app.configure('development', function(){
 });
 
 app.get('/', ui.index);
-app.get('/procedures/all', ui.all);
-app.get('/procedures/:tag', ui.tagged);
+app.get('/me/procedures/all', ui.all);
+app.get('/me/procedures/:tag', ui.tagged);
 
 app.get('/api/1/me/analyse/items', analyse.getitems);
+app.get('/api/1/me/analyse/items/:tag', analyse.getitemsbytag);
 app.get('/api/1/me/items', api.getItems);
 
 app.post('/api/1/me/register', api.register);

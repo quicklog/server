@@ -13,68 +13,28 @@
 		<figure id="procedurebytag" style="height:500px;"></figure>		
 
 		<script>
-			// $.getJSON('/api/1/me/analyse/items', function(responseData) {
-			// 	var data = {
-			// 		"xScale": "ordinal",
-			// 		"yScale": "linear",
-			// 		"type": "bar",
-			// 		"main": [
-			// 		{
-			// 		  "data": responseData
-			// 		}
-			// 		]
-			// 	};
+			$.getJSON('/api/1/me/analyse/items/<%=tag %>', function(responseData) {
+					
+				var data = {
+				  "xScale": "time",
+				  "yScale": "linear",
+				  "type": "line",
+				  "main": [
+				    {
+				      "className": ".pizza",
+				      "data": responseData
+				    }
+				  ]
+				};
+				
+				var opts = {
+				  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
+				  "tickFormatX": function (x) { return d3.time.format('%A')(x); }
+				};
 
-			// 	var myChart = new xChart('bar', data, '#allprocedures');
-			// });
+				var myChart = new xChart('line', data, '#procedurebytag', opts);
 
-			var data = {
-			  "xScale": "time",
-			  "yScale": "linear",
-			  "type": "line",
-			  "main": [
-			    {
-			      "className": ".pizza",
-			      "data": [
-			        {
-			          "x": "2012-11-05",
-			          "y": 1
-			        },
-			        {
-			          "x": "2012-11-06",
-			          "y": 6
-			        },
-			        {
-			          "x": "2012-11-07",
-			          "y": 13
-			        },
-			        {
-			          "x": "2012-11-08",
-			          "y": -3
-			        },
-			        {
-			          "x": "2012-11-09",
-			          "y": -4
-			        },
-			        {
-			          "x": "2012-11-10",
-			          "y": 9
-			        },
-			        {
-			          "x": "2012-11-11",
-			          "y": 6
-			        }
-			      ]
-			    }
-			  ]
-			};
-			
-			var opts = {
-			  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
-			  "tickFormatX": function (x) { return d3.time.format('%A')(x); }
-			};
-
-			var myChart = new xChart('line', data, '#procedurebytag', opts);
+			});
 
 		</script>
 
