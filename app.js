@@ -25,6 +25,8 @@ app.configure('development', function(){
 });
 
 app.get('/', ui.index);
+app.get('/procedures/all', ui.all);
+app.get('/procedures/:tag', ui.tagged);
 
 app.get('/api/1/me/analyse/items', analyse.getitems);
 app.get('/api/1/me/items', api.getItems);
