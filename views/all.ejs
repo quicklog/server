@@ -25,7 +25,13 @@
 					]
 				};
 
-				var myChart = new xChart('bar', data, '#allprocedures');
+				var opts = {
+					"click" : function(data, i) {
+						window.location.href = "/me/procedures/" + data.x;
+					}
+				};
+
+				var myChart = new xChart('bar', data, '#allprocedures', opts);
 			});
 
 		</script>

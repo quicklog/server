@@ -25,6 +25,7 @@ app.configure('development', function(){
 });
 
 app.get('/', ui.index);
+app.get('/me', ui.me);
 app.get('/me/procedures/all', ui.all);
 app.get('/me/procedures/:tag', ui.tagged);
 
