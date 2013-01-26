@@ -1,9 +1,20 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "jade": ">= 0.0.1"
-  }
+    "name": "quicklog",
+    "version": "0.0.1",
+    "dependencies": {
+      "express": "2.5.8",
+      "jade": ">= 0.0.1"
+  },
+    "devDependencies": {
+        "mocha": "1.4.2",
+        "sinon": "1.4.2"
+    },
+    "main": "./lib/server",
+    "scripts": {
+        "test": "mocha"
+    },
+    "engines": {
+       "node": "0.8.x",
+       "npm":  "1.1.x"
+    }
 }
