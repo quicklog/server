@@ -5,8 +5,6 @@ var assert = require('assert'),
 describe('open', function() {
   it('should connect', function(done) {
     setTimeout(done, 300);
-    data.getCollection('items', function(e, collection) {
-      done(e);
-    });
+    data.open(done);
   });
 });

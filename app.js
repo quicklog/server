@@ -1,4 +1,5 @@
-var express = require('express')
+var data = require('./lib/data.js')
+    ,express = require('express')
   , api = require('./routes/api')
   , ui = require('./routes/ui')
   , analyse = require('./routes/analyse')
@@ -31,6 +32,16 @@ app.get('/api/1/me/items', api.getItems);
 app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+console.log('opening database...');
+data.open(function(e) {
+  console.log('database opened');
+  if(e) {
+    console.error(e);
+    return;
+  }
+
+  console.log('starting server');
+  http.createServer(app).listen(app.get('port'), function(){
+    console.log("Express server listening on port " + app.get('port'));
+  });
 });
