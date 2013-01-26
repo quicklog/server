@@ -1,16 +1,14 @@
-exports.getitems = function(req, res) {
-  var data = [
-        {
-          "x": "Cannula",
-          "y": 7
-        },
-        {
-          "x": "Procedure 2",
-          "y": 8
-        }
-     ];
+var data = require('../lib/data.js');
 
-  res.send(data);
+exports.getitems = function(req, res) {
+  var who = "THEUSER";
+  data.getAllCounts(who, function(e, data) {
+    if(e) {
+      console.error(e);
+      res.send(500);
+    }
+    res.send(data);
+  });
 };
 
 exports.getitemsbytag = function(req, res) {
