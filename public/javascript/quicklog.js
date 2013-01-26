@@ -1,9 +1,31 @@
+var timechart;
+
+var createTimeChart = function() {
+	var data = {
+		  "xScale": "time",
+		  "yScale": "linear",
+		  "type": "line",
+		  "main": [
+		    {
+		      "data": null
+		    }
+		  ]
+		};
+		
+	var opts = {
+	  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
+	  "tickFormatX": function (x) { return d3.time.format('%A')(x); }
+	};
+
+	timechart = new xChart('line', data, '#procedurebytag', opts);
+};
+
 var getItemsForTag = function() {
 
 	var tag = $("#tag").val(); 
 
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(responseData) {
-								
+
 		var data = {
 		  "xScale": "time",
 		  "yScale": "linear",
@@ -14,14 +36,8 @@ var getItemsForTag = function() {
 		    }
 		  ]
 		};
-		
-		var opts = {
-		  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
-		  "tickFormatX": function (x) { return d3.time.format('%A')(x); }
-		};
 
-		var myChart = new xChart('line', data, '#procedurebytag', opts);
-
+		timechart.setData(data);
 	});
 
 };
@@ -42,7 +58,8 @@ var getItems = function(done) {
 var documentReady = function() {
 	$(document).ready(function() {
 
-		getItems(getItemsForTag());
+		createTimeChart();
+		getItems(getItemsForTag);
 
 		$('#tag').change(function() {
 			getItemsForTag();
