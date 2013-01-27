@@ -21,7 +21,7 @@ exports.addItems = function(req, res) {
 
   var item = items[0];
 
-  data.addItem(token, item, function(e) {
+  data.addItemDay(token, item, function(e) {
     if(e) {
       console.error(e);
       return res.send(500);
@@ -40,25 +40,16 @@ exports.addItems = function(req, res) {
 
 exports.getItems = function(req, res) {
   console.log('getItems');
-  var items = [{
-    "_id": "THEUSER_2",
-    "comment": "comment 1",
-    "id": 2,
-    "rating": 5,
-    "tags": [
-        "canula"
-    ],
-    "timestamp": 1358985600000
-},
-{
-    "_id": "THEUSER_2",
-    "comment": "happy",
-    "id": 2,
-    "rating": 5,
-    "tags": [
-        "canula"
-    ],
-    "timestamp": 1358985600000
-}];
-  res.send(items);
+  var who = "THEUSER";
+  var tag = req.params.tag;
+  var day = req.params.day;
+
+  data.getItems(who, tag, day, function(e, items) {
+    if(e) {
+      console.error(e);
+      return res.send(500);
+    }
+
+    return res.send(items);
+  });
 };
