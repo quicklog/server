@@ -102,6 +102,10 @@ var getItems = function(done) {
 			$('#tag').append('<option value="' + tag + '">' + tag + '</option>');
 		});
 
+		// Set comments for today
+		var firsttag = items[0].x;
+		getItemForTagForDay(firsttag, new Date().getTime());
+
 		done();
 	});
 
