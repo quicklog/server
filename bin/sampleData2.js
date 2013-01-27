@@ -1,180 +1,53 @@
 
 var _ = require('underscore'),
+      moment = require('moment'),
       request = require('request');
 
-var data = [
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357084800000 ],
-    [ "blood test", 1357171200000 ],
-    [ "blood test", 1357171200000 ],
-    [ "blood test", 1357171200000 ],
-    [ "blood test", 1357171200000 ],
-    [ "blood test", 1357171200000 ],
-    [ "blood test", 1357171200000 ],
-    [ "blood test", 1357257600000 ],
-    [ "blood test", 1357257600000 ],
-    [ "blood test", 1357257600000 ],
-    [ "blood test", 1357516800000 ],
-    [ "blood test", 1357603200000 ],
-    [ "blood test", 1357603200000 ],
-    [ "blood test", 1357603200000 ],
-    [ "blood test", 1357603200000 ],
-    [ "blood test", 1357603200000 ],
-    [ "blood test", 1357689600000 ],
-    [ "blood test", 1357689600000 ],
-    [ "blood test", 1357689600000 ],
-    [ "blood test", 1357776000000 ],
-    [ "blood test", 1357776000000 ],
-    [ "blood test", 1357776000000 ],
-    [ "blood test", 1357776000000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1357862400000 ],
-    [ "blood test", 1358121600000 ],
-    [ "blood test", 1358121600000 ],
-    [ "blood test", 1358121600000 ],
-    [ "blood test", 1358208000000 ],
-    [ "blood test", 1358208000000 ],
-    [ "blood test", 1358208000000 ],
-    [ "blood test", 1358294400000 ],
-    [ "blood test", 1358294400000 ],
-    [ "blood test", 1358294400000 ],
-    [ "blood test", 1358380800000 ],
-    [ "blood test", 1358380800000 ],
-    [ "blood test", 1358467200000 ],
-    [ "blood test", 1358467200000 ],
-    [ "blood test", 1358467200000 ],
-    [ "blood test", 1358812800000 ],
-    [ "blood test", 1358812800000 ],
-    [ "blood test", 1358899200000 ],
-    [ "blood test", 1358899200000 ],
-    [ "blood test", 1358899200000 ],
-    [ "blood test", 1358899200000 ],
-    [ "blood test", 1358985600000 ],
-    [ "blood test", 1358985600000 ],
-    [ "canula", 1357084800000 ],
-    [ "canula", 1357084800000 ],
-    [ "canula", 1357084800000 ],
-    [ "canula", 1357084800000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357171200000 ],
-    [ "canula", 1357257600000 ],
-    [ "canula", 1357257600000 ],
-    [ "canula", 1357257600000 ],
-    [ "canula", 1357257600000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357516800000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357603200000 ],
-    [ "canula", 1357689600000 ],
-    [ "canula", 1357689600000 ],
-    [ "canula", 1357689600000 ],
-    [ "canula", 1357689600000 ],
-    [ "canula", 1357689600000 ],
-    [ "canula", 1357776000000 ],
-    [ "canula", 1357776000000 ],
-    [ "canula", 1357776000000 ],
-    [ "canula", 1357776000000 ],
-    [ "canula", 1357776000000 ],
-    [ "canula", 1357862400000 ],
-    [ "canula", 1357862400000 ],
-    [ "canula", 1357862400000 ],
-    [ "canula", 1357862400000 ],
-    [ "canula", 1358121600000 ],
-    [ "canula", 1358121600000 ],
-    [ "canula", 1358121600000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358208000000 ],
-    [ "canula", 1358294400000 ],
-    [ "canula", 1358294400000 ],
-    [ "canula", 1358294400000 ],
-    [ "canula", 1358294400000 ],
-    [ "canula", 1358380800000 ],
-    [ "canula", 1358380800000 ],
-    [ "canula", 1358380800000 ],
-    [ "canula", 1358380800000 ],
-    [ "canula", 1358380800000 ],
-    [ "canula", 1358380800000 ],
-    [ "canula", 1358467200000 ],
-    [ "canula", 1358467200000 ],
-    [ "canula", 1358467200000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358812800000 ],
-    [ "canula", 1358899200000 ],
-    [ "canula", 1358899200000 ],
-    [ "canula", 1358899200000 ],
-    [ "canula", 1358899200000 ],
-    [ "canula", 1358899200000 ],
-    [ "canula", 1358985600000 ],
-    [ "canula", 1358985600000 ],
-    [ "canula", 1358985600000 ]
-];
+var numberOfDays = 30;
 
-var id = 1;
+var currentDay = moment().sod().subtract('days', numberOfDays).add('hours', 8);
+var procedures = ["Blood Test", "Canula", "Catheter", "Blood Cultures", "Chest Drain"];
+var comments = ["", "difficult patient", "awkward parents", "rushed", "happy", "no comment", ""];
 
-var send = function() {
-  id = id + 1;
-  var item = data.pop();
-  //console.log(JSON.stringify(json));
-  if(item) {
+var data = [];
+var id = 0;
+while(currentDay < moment()) {
+    ++id;
+    var procedure = procedures[_.random(0, procedures.length - 1)];
+    var comment = comments[_.random(0, comments.length - 1)];
+    if(_.random(0, 10) < 5) {
+        comment = '';
+    }
     var json = [{
         id: id,
-        tags: [item[0]],
-        comment: "happy",
-        rating: 5,
-        timestamp: item[1]
-      }];
+        tags: [procedure],
+        comment: comment,
+        rating: _.random(1, 5),
+        timestamp: currentDay.valueOf()
+    }];
 
-    console.log(json);
+    data.push(json);
+
+     if (Math.random() > 0.5) {
+        currentDay = currentDay.add('minutes', 20);
+     }
+
+     currentDay = currentDay.add('minutes', Math.random() * 13);
+
+    if(currentDay.hours() > 19) {
+        currentDay = currentDay.add('hours', 13);
+    }
+}
+
+var send = function() {
+  var item = data.pop();
+  if(item) {
     var options = {
       headers: { "USERTOKEN": "THEUSER" },
       url: "http://localhost:5000/api/1/me/items",
-      json: json
+      json: item
     };
+    console.log('adding' + item[0].id);
 
     request.post(options, function(e, response) {
       if(e) {
