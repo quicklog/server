@@ -106,7 +106,6 @@ var getItemsForTag = function() {
 	getItemForTagForDay(tag, new Date().getTime());
 
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(items) {
-		console.log(items);
 
 		var total;
 		total = _.reduce(items.counts, function(memo, num) {
