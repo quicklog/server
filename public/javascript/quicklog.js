@@ -92,11 +92,19 @@ var getItemsForTag = function() {
 
 	var tag = $("#tag").val();
 	$('#procedure').text(tag);
-	$('#total').text('42');
 	//$('#average').text('4');
 
-	$.getJSON('/api/1/me/analyse/items/' + tag, function(responseData) {
-		createTimeChart2(tag, responseData);
+	$.getJSON('/api/1/me/analyse/items/' + tag, function(items) {
+		console.log(items);
+		
+		var total;
+		total = _.reduce(items.counts, function(memo, num) {
+			return memo + num[1];
+		}, 0);
+
+		$('#total').text(total);
+
+		createTimeChart2(tag, items);
 	});
 
 };
