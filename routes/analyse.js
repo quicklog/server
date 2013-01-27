@@ -20,7 +20,6 @@ exports.getitemsbytag = function(req, res) {
       console.error(e);
       res.send(500);
     }
-    console.log(data);
     res.send(data);
   });
 };
