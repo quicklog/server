@@ -2,7 +2,7 @@ var timechart;
 var timechart2;
 
 var createTimeChart2 = function(tag, data) {
-	
+
 	timechart2 = new Highcharts.StockChart({
 		chart : {
 			renderTo : 'container'
@@ -13,9 +13,9 @@ var createTimeChart2 = function(tag, data) {
 		},
 
 		title : {
-			text : 'Number of procedures'
+			text : ''
 		},
-		
+
 		series : [{
 			name : tag,
 			data : data,
@@ -37,7 +37,7 @@ var createTimeChart = function() {
 		    }
 		  ]
 		};
-		
+
 	var opts = {
 	  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
 	  "tickFormatX": function (x) { return d3.time.format('%A')(x); }
@@ -48,7 +48,8 @@ var createTimeChart = function() {
 
 var getItemsForTag = function() {
 
-	var tag = $("#tag").val(); 
+	var tag = $("#tag").val();
+	$('#procedure').text(tag);
 
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(responseData) {
 		createTimeChart2(tag, responseData);
@@ -76,6 +77,6 @@ var documentReady = function() {
 
 		$('#tag').change(function() {
 			getItemsForTag();
-		});				
+		});
 	});
 };
