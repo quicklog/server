@@ -3,11 +3,18 @@ var timechart2;
 
 var getItemForTagForDay = function(tag, day) {
 	$.getJSON('/api/1/me/items/' + tag + '/' + day + '/', function(items) {
+		$('#commentsDate').empty();
 		$('#comments').empty();
+
+		if(items.length > 0) {
+			var date = moment(parseInt(items[0].timestamp)).format('Do MMMM YYYY');
+			$('#commentsDate').text(date);
+		}
+
 		$.each(items, function(i, item) {
-			var date = moment(parseInt(item.timestamp)).format('MMMM Do YYYY, HH:mm:ss');
+			var time = moment(parseInt(item.timestamp)).format('HH:mm:ss');
 			var comment = item.comment;
-			$('#comments').append('<tr><td>' + date + '</td><td>' + tag + '</td><td>' + comment + '</td><td></td></tr>');
+			$('#comments').append('<tr><td>' + time + '</td><td>' + comment + '</td><td></td></tr>');
 		});
 	});
 };
@@ -85,11 +92,22 @@ var getItemsForTag = function() {
 
 	var tag = $("#tag").val();
 	$('#procedure').text(tag);
-	$('#total').text('42');
 	//$('#average').text('4');
 
-	$.getJSON('/api/1/me/analyse/items/' + tag, function(responseData) {
-		createTimeChart2(tag, responseData);
+	// Set comments for today
+	getItemForTagForDay(tag, new Date().getTime());
+
+	$.getJSON('/api/1/me/analyse/items/' + tag, function(items) {
+		console.log(items);
+		
+		var total;
+		total = _.reduce(items.counts, function(memo, num) {
+			return memo + num[1];
+		}, 0);
+
+		$('#total').text(total);
+
+		createTimeChart2(tag, items);
 	});
 
 };
@@ -101,10 +119,6 @@ var getItems = function(done) {
 			var tag = item.x;
 			$('#tag').append('<option value="' + tag + '">' + tag + '</option>');
 		});
-
-		// Set comments for today
-		var firsttag = items[0].x;
-		getItemForTagForDay(firsttag, new Date().getTime());
 
 		done();
 	});
