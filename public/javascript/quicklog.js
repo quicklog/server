@@ -3,11 +3,18 @@ var timechart2;
 
 var getItemForTagForDay = function(tag, day) {
 	$.getJSON('/api/1/me/items/' + tag + '/' + day + '/', function(items) {
+		$('#commentsDate').empty();
 		$('#comments').empty();
+
+		if(items.length > 0) {
+			var date = moment(parseInt(items[0].timestamp)).format('Do MMMM YYYY');
+			$('#commentsDate').text(date);
+		}
+
 		$.each(items, function(i, item) {
-			var date = moment(parseInt(item.timestamp)).format('MMMM Do YYYY, HH:mm:ss');
+			var time = moment(parseInt(item.timestamp)).format('HH:mm:ss');
 			var comment = item.comment;
-			$('#comments').append('<tr><td>' + date + '</td><td>' + tag + '</td><td>' + comment + '</td><td></td></tr>');
+			$('#comments').append('<tr><td>' + time + '</td><td>' + tag + '</td><td>' + comment + '</td><td></td></tr>');
 		});
 	});
 };
