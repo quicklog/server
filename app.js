@@ -31,7 +31,7 @@ app.get('/me/procedures/:tag', ui.tagged);
 
 app.get('/api/1/me/analyse/items', analyse.getitems);
 app.get('/api/1/me/analyse/items/:tag', analyse.getitemsbytag);
-app.get('/api/1/me/items', api.getItems);
+app.get('/api/1/me/items/:tag/:day', api.getItems);
 
 app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);

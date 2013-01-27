@@ -26,6 +26,7 @@ exports.addItems = function(req, res) {
       console.error(e);
       return res.send(500);
     }
+
     data.addAllCounts(token, item, function(e) {
       if(e) {
         console.error(e);
@@ -39,7 +40,25 @@ exports.addItems = function(req, res) {
 
 exports.getItems = function(req, res) {
   console.log('getItems');
-  var items = [
-  ];
+  var items = [{
+    "_id": "THEUSER_2",
+    "comment": "comment 1",
+    "id": 2,
+    "rating": 5,
+    "tags": [
+        "canula"
+    ],
+    "timestamp": 1358985600000
+},
+{
+    "_id": "THEUSER_2",
+    "comment": "happy",
+    "id": 2,
+    "rating": 5,
+    "tags": [
+        "canula"
+    ],
+    "timestamp": 1358985600000
+}];
   res.send(items);
 };
