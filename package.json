@@ -10,7 +10,8 @@
   },
     "devDependencies": {
         "mocha": "1.4.2",
-        "sinon": "1.4.2"
+        "sinon": "1.4.2",
+        "request" : "x.x.x"
     },
     "main": "./lib/server",
     "scripts": {
