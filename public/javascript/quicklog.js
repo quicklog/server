@@ -2,6 +2,43 @@ var timechart;
 var timechart2;
 
 var createTimeChart2 = function(tag, data) {
+	
+	var seriesOptions = [];
+	seriesOptions[0]  = {
+			name : tag,
+			data : data,
+			tooltip: {
+				valueDecimals: 0
+			}
+		};
+
+	// TEST DATA
+	var faildata = [
+			[1357084800000,2],
+			[1357171200000,1],
+			[1357257600000,2],
+			[1357516800000,0],
+			[1357603200000,1],
+			[1357689600000,0],
+			[1357776000000,2],
+			[1357862400000,0],
+			[1358121600000,0],
+			[1358208000000,1],
+			[1358294400000,0],
+			[1358380800000,1],
+			[1358467200000,1],
+			[1358812800000,1],
+			[1358899200000,0],
+			[1358985600000,1]
+		];
+
+	seriesOptions[1]  = {
+			name : tag + ' failures',
+			data : faildata,
+			tooltip: {
+				valueDecimals: 0
+			}
+		};	
 
 	timechart2 = new Highcharts.StockChart({
 		chart : {
@@ -15,14 +52,8 @@ var createTimeChart2 = function(tag, data) {
 		title : {
 			text : ''
 		},
-
-		series : [{
-			name : tag,
-			data : data,
-			tooltip: {
-				valueDecimals: 0
-			}
-		}]
+		
+		series : seriesOptions
 	});
 };
 
