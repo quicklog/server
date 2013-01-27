@@ -1,6 +1,17 @@
 var timechart;
 var timechart2;
 
+var getItemForTagForDay = function(tag, day) {
+	$.getJSON('/api/1/me/items/' + tag + '/' + day + '/', function(items) {
+		$('#comments').empty();
+		$.each(items, function(i, item) {
+			var date = moment(parseInt(item.timestamp)).format('MMMM Do YYYY, HH:mm:ss');
+			var comment = item.comment;
+			$('#comments').append('<tr><td>' + date + '</td><td>' + tag + '</td><td>' + comment + '</td><td></td></tr>');
+		});
+	});
+};
+
 var createTimeChart2 = function(tag, data) {
 
 	var seriesOptions = [];
@@ -24,6 +35,19 @@ var createTimeChart2 = function(tag, data) {
 		chart : {
 			renderTo : 'container'
 		},
+
+		plotOptions: {
+	        series: {
+	            cursor: 'pointer',
+	            events: {
+	                click: function(event) {
+	                    console.log(event.point);
+	                    var time = event.point.x;
+	                    getItemForTagForDay(tag, time);
+	                }
+	            }
+	        }
+	    },
 
 		rangeSelector : {
 			selected : 1
