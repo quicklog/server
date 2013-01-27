@@ -14,7 +14,7 @@ var getItemForTagForDay = function(tag, day) {
 		$.each(items, function(i, item) {
 			var time = moment(parseInt(item.timestamp)).format('HH:mm:ss');
 			var comment = item.comment;
-			$('#comments').append('<tr><td>' + time + '</td><td>' + tag + '</td><td>' + comment + '</td><td></td></tr>');
+			$('#comments').append('<tr><td>' + time + '</td><td>' + comment + '</td><td></td></tr>');
 		});
 	});
 };
@@ -94,6 +94,9 @@ var getItemsForTag = function() {
 	$('#procedure').text(tag);
 	//$('#average').text('4');
 
+	// Set comments for today
+	getItemForTagForDay(tag, new Date().getTime());
+
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(items) {
 		console.log(items);
 		
@@ -116,10 +119,6 @@ var getItems = function(done) {
 			var tag = item.x;
 			$('#tag').append('<option value="' + tag + '">' + tag + '</option>');
 		});
-
-		// Set comments for today
-		var firsttag = items[0].x;
-		getItemForTagForDay(firsttag, new Date().getTime());
 
 		done();
 	});
