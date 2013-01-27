@@ -14,7 +14,8 @@ var getItemForTagForDay = function(tag, day) {
 		$.each(items, function(i, item) {
 			var time = moment(parseInt(item.timestamp)).format('HH:mm:ss');
 			var comment = item.comment;
-			$('#comments').append('<tr><td>' + time + '</td><td>' + comment + '</td><td></td></tr>');
+			var rating = item.rating;
+			$('#comments').append('<tr><td>' + time + '</td><td>' + comment + '</td><td>' + rating + '</td></tr>');
 		});
 	});
 };
@@ -99,7 +100,7 @@ var getItemsForTag = function() {
 
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(items) {
 		console.log(items);
-		
+
 		var total;
 		total = _.reduce(items.counts, function(memo, num) {
 			return memo + num[1];
