@@ -14,8 +14,15 @@ var getItemForTagForDay = function(tag, day) {
 		$.each(items, function(i, item) {
 			var time = moment(parseInt(item.timestamp)).format('HH:mm:ss');
 			var comment = item.comment;
-			var rating = item.rating;
-			$('#comments').append('<tr><td>' + time + '</td><td>' + comment + '</td><td>' + rating + '</td></tr>');
+
+			var rating = '';
+			var starCount = item.rating;
+			while(starCount > 0) {
+				rating = rating + '<i class="icon-star"/></i> ';
+				--starCount;
+			}
+
+			$('#comments').append('<tr><td>' + time + '</td><td>' + rating + '</td><td>' + comment + '</td></tr>');
 		});
 	});
 };
