@@ -2,7 +2,7 @@ var timechart;
 var timechart2;
 
 var createTimeChart2 = function(tag, data) {
-	
+
 	var seriesOptions = [];
 	seriesOptions[0]  = {
 			name : tag,
@@ -38,7 +38,7 @@ var createTimeChart2 = function(tag, data) {
 			tooltip: {
 				valueDecimals: 0
 			}
-		};	
+		};
 
 	timechart2 = new Highcharts.StockChart({
 		chart : {
@@ -52,7 +52,7 @@ var createTimeChart2 = function(tag, data) {
 		title : {
 			text : ''
 		},
-		
+
 		series : seriesOptions
 	});
 };
@@ -81,6 +81,8 @@ var getItemsForTag = function() {
 
 	var tag = $("#tag").val();
 	$('#procedure').text(tag);
+	$('#total').text('42');
+	//$('#average').text('4');
 
 	$.getJSON('/api/1/me/analyse/items/' + tag, function(responseData) {
 		createTimeChart2(tag, responseData);
