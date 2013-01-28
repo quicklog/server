@@ -36,7 +36,7 @@ app.get('/api/1/me/items/:tag/:day', api.getItems);
 app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 
-console.log('opening database...');
+console.log('opening database ' + data.configuration().database + ' on ' + data.configuration().host);
 data.open(function(e) {
   console.log('database opened');
   if(e) {
