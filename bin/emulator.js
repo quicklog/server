@@ -16,11 +16,17 @@ var addItems = function(items, done) {
 };
 
 var items = [{
-    "id": 1,
+    "id": new Date().getTime(),
     "tags": ["my item"],
     "comment": "my new comment",
     "rating": 3,
     "timestamp": new Date().getTime()
  }];
 
-addItems(items, function() {});
+addItems(items, function(e, response) {
+    if(e) {
+        console.error(e);
+    }
+
+    console.log(response);
+});
