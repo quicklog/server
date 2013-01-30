@@ -9,7 +9,7 @@ var host = process.argv[2] || 'localhost:5000';
 var addItemUrl  = 'http://' + host + '/api/1/me/items';
 
 var currentDay = moment().sod().subtract('days', numberOfDays).add('hours', 8);
-var procedures = ["Blood Test", "Canula", "Catheter", "Blood Cultures", "Chest Drain"];
+var procedures = ["Blood Test", "Cannula", "Catheter", "Blood Cultures", "Chest Drain"];
 var comments = ["", "difficult patient", "awkward parents", "rushed", "happy", "no comment", ""];
 
 var data = [];
