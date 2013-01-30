@@ -12,7 +12,7 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
-  app.use(express.favicon());
+  app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -36,7 +36,7 @@ app.get('/api/1/me/items/:tag/:day', api.getItems);
 app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 
-console.log('opening database...');
+console.log('opening database ' + data.configuration().database + ' on ' + data.configuration().host);
 data.open(function(e) {
   console.log('database opened');
   if(e) {

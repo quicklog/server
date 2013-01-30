@@ -2,16 +2,17 @@
     "name": "quicklog",
     "version": "0.0.1",
     "dependencies": {
+      "async": "*",
       "express": "*",
       "ejs" : "*",
-      "moment": "1.7.2",
-      "mongodb" : "1.1.11",
-      "underscore" : "1.4.3"
+      "moment": "*",
+      "mongodb" : "*",
+      "underscore" : "*"
   },
     "devDependencies": {
-        "mocha": "1.4.2",
-        "sinon": "1.4.2",
-        "request" : "x.x.x"
+        "mocha": "*",
+        "sinon": "*",
+        "request" : "*"
     },
     "main": "./lib/server",
     "scripts": {
