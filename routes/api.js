@@ -48,7 +48,7 @@ api.addItems = function(req, res) {
 
   var user = 'THEUSER';
 
-  items.add(user, req.body, function(e) {
+  items.addMany(user, req.body, function(e) {
     if(e) {
       console.error(e);
       return res.send(500);

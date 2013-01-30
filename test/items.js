@@ -11,14 +11,17 @@ var sampleItems = [{
     timestamp: 1359486450504
 }];
 
-describe('items.add', function() {
+describe('items', function() {
   beforeEach(function(done) {
     return helper.deleteCollections(done);
   });
   afterEach(function(done) {
     return helper.closeConnection(done);
   });
-  it('should not throw', function(done) {
-    items.add('TESTUSER', sampleItems, done);
+  it('addMany should not throw', function(done) {
+    items.addMany('TESTUSER', sampleItems, done);
+  });
+  it('add should not throw', function(done) {
+    items.add('TESTUSER', sampleItems[0], done);
   });
 });
