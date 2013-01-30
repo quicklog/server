@@ -1,22 +1,49 @@
 var data = require('../lib/data.js'),
-      items = require('../lib/items.js');
+      items = require('../lib/items.js'),
+      tags = require('../lib/tags.js');
 
-exports.register = function(req, res) {
+var api = {};
+
+api.register = function(req, res) {
   res.send('USERTOKEN');
 };
 
-exports.addItems = function(req, res) {
-  console.log('addItems');
-  var token = req.headers['usertoken'];
+api.getTags = function(req, res) {
+  var who = "THEUSER";
+  tags.all(who, function(e, theTags) {
+    if(e) {
+      console.error(e);
+      return res.send(500);
+    }
 
-  if(!token) {
-    console.error('missing header');
-    return res.send('missing usertoken header', 500);
+    return res.send(theTags);
+  });
+};
+
+api.getItems = function(req, res) {
+  var who = "THEUSER";
+  var tag = req.params.tag;
+  var day = req.params.day;
+
+  data.getItems(who, tag, day, function(e, items) {
+    if(e) {
+      console.error(e);
+      return res.send(500);
+    }
+
+    return res.send(items);
+  });
+};
+
+api.addItems = function(req, res) {
+  if(!req.headers['usertoken']) {
+    console.error('missing header [usertoken]');
+    return res.send('you are not authenticated to use this service', 500);
   }
 
   if(!req.body) {
     console.error('missing items in body');
-    return res.send('missing items in body', 500);
+    return res.send('no items found in message body', 500);
   }
 
   var user = 'THEUSER';
@@ -31,18 +58,4 @@ exports.addItems = function(req, res) {
   });
 };
 
-exports.getItems = function(req, res) {
-  console.log('getItems');
-  var who = "THEUSER";
-  var tag = req.params.tag;
-  var day = req.params.day;
-
-  data.getItems(who, tag, day, function(e, items) {
-    if(e) {
-      console.error(e);
-      return res.send(500);
-    }
-
-    return res.send(items);
-  });
-};
+module.exports = api;

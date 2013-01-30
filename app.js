@@ -24,14 +24,20 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// ui
 app.get('/', ui.index);
 app.get('/me', ui.me);
 app.get('/me/procedures/all', ui.all);
 
-app.get('/api/1/me/analyse/items', analyse.getitems);
-app.get('/api/1/me/analyse/items/:tag', analyse.getitemsbytag);
+// api
+app.get('/api/1/me/tags', api.getTags);
 app.get('/api/1/me/items/:tag/:day', api.getItems);
 
+// analytics
+app.get('/api/1/me/analyse/items', analyse.getitems);
+app.get('/api/1/me/analyse/items/:tag', analyse.getitemsbytag);
+
+// posts
 app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 
