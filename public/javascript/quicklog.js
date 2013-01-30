@@ -1,4 +1,3 @@
-var timechart;
 var timechart2;
 
 var getItemForTagForDay = function(tag, day) {
@@ -27,7 +26,7 @@ var getItemForTagForDay = function(tag, day) {
 	});
 };
 
-var createTimeChart2 = function(tag, data) {
+var createTimeChart = function(tag, data) {
 
 	var seriesOptions = [];
 	seriesOptions[0]  = {
@@ -76,26 +75,6 @@ var createTimeChart2 = function(tag, data) {
 	});
 };
 
-var createTimeChart = function() {
-	var data = {
-		  "xScale": "time",
-		  "yScale": "linear",
-		  "type": "line",
-		  "main": [
-		    {
-		      "data": null
-		    }
-		  ]
-		};
-
-	var opts = {
-	  "dataFormatX": function (x) { return d3.time.format('%Y-%m-%d').parse(x); },
-	  "tickFormatX": function (x) { return d3.time.format('%A')(x); }
-	};
-
-	timechart = new xChart('line', data, '#procedurebytag', opts);
-};
-
 var getItemsForTag = function() {
 
 	var tag = $("#tag").val();
@@ -114,7 +93,7 @@ var getItemsForTag = function() {
 
 		$('#total').text(total);
 
-		createTimeChart2(tag, items);
+		createTimeChart(tag, items);
 	});
 
 };
