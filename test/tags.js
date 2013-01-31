@@ -19,6 +19,14 @@ describe('tags', function() {
       done(e);
     });
   });
+  it('calling addMany should add add all', function(done) {
+    tags.addMany('TESTUSER', ['tag1','tag2'], function(e) {
+      tags.all('TESTUSER', function(e, data) {
+        assert.equal(2, data.length);
+        done(e);
+      });
+    });
+  });
   it('calling add should add add all', function(done) {
     tags.add('TESTUSER', 'tag1', function(e) {
       tags.all('TESTUSER', function(e, data) {
