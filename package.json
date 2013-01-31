@@ -3,11 +3,14 @@
     "version": "0.0.1",
     "dependencies": {
       "async": "*",
+      "connect-flash": "*",
       "express": "*",
-      "ejs" : "*",
+      "ejs": "*",
       "moment": "*",
-      "mongodb" : "*",
-      "underscore" : "*"
+      "mongodb": "*",
+      "passport": "*",
+      "passport-local": "*",
+      "underscore": "*"
   },
     "devDependencies": {
         "mocha": "*",
