@@ -36,7 +36,7 @@ app.configure('development', function(){
 // TODO wire in auth
 // ui
 app.get('/', ui.index);
-app.get('/me', ui.me);
+app.get('/me', authentication.ensureAuthenticated, ui.me);
 app.get('/me/procedures/all', ui.all);
 
 // api
@@ -66,7 +66,8 @@ app.post('/login', function(req, res, next) {
 
     req.logIn(user, function(err) {
       if (err) { return next(err); }
-      return res.redirect('/' + user.username);
+      // return res.redirect('/' + user.username);
+      return res.redirect('/me');
     });
 
   })(req, res, next);
@@ -106,22 +107,7 @@ passport.deserializeUser(function(id, done) {
 
 var theLocalStrategy = function(username, password, done) {
   process.nextTick(function () {
-    
-    authentication.findByUsername(username, function(err, user) {
-      if (err) { 
-        return done(err); 
-      }
-
-      if (!user) { 
-        return done(null, false, { message: 'Unknown user ' + username }); 
-      }
-
-      if (user.password != password) { 
-        return done(null, false, { message: 'Invalid password' }); 
-      }
-
-      return done(null, user);
-    })
+    authentication.strategy(username, password, done);
   });
 };
 
