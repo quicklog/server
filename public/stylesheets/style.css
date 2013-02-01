@@ -12,6 +12,13 @@ a {
   color: #00B7FF;
 }
 
+header > img {
+  float: left;
+  width: 60px;;
+  margin-right: 10px;
+}
+
+
 #procedure.capitalize {
   text-transform:capitalize;
 }
