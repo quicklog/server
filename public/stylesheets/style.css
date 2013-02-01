@@ -14,10 +14,15 @@ a {
 
 header > img {
   float: left;
-  width: 60px;;
+  width: 60px;
   margin-right: 10px;
 }
 
+legend > img {
+  float: left;
+  width: 35px;
+  margin-right: 10px;
+}
 
 #procedure.capitalize {
   text-transform:capitalize;
