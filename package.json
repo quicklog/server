@@ -8,6 +8,7 @@
       "ejs": "*",
       "moment": "*",
       "mongodb": "*",
+      "node-uuid" : "*",
       "passport": "*",
       "passport-local": "*",
       "underscore": "*"

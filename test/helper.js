@@ -22,6 +22,9 @@ helper.deleteCollections = function(done) {
       },
        function(cb) {
          data.client.dropCollection(data.collections.countsTags, function() { cb(); });
+      },
+      function(cb) {
+        data.open(cb);
       }
     ], done);
 };

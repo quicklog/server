@@ -9,8 +9,9 @@ Logging clinical procedures is a bit of a nightmare...
 
 ....what we need is Quicklog.
 
-Rapid! 
+Rapid!
 
 Works offline!
 
 Statistical analysis!
+
