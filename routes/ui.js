@@ -1,9 +1,9 @@
 exports.index = function(req, res) {
-  res.render('index', { title: 'My Quicklog' });
+  res.render('index');
 };
 
 exports.me = function(req, res) {
-  res.render('me', { title: "me" });
+  res.render('me');
 };
 
 exports.all = function(req, res) {

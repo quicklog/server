@@ -1,4 +1,5 @@
-var data = require('./lib/data.js')
+var auth = require('./lib/authentication.js')
+  , data = require('./lib/data.js')
   , express = require('express')
   , api = require('./routes/api')
   , flash = require('connect-flash')
@@ -33,25 +34,17 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-var ensureAuthenticated = function(req, res, next) {
-  if (req.isAuthenticated()) { 
-    return next(); 
-  }
-  
-  return res.redirect('/');
-};
-
 // ui
 app.get('/', ui.index);
-app.get('/me', ensureAuthenticated, ui.me);
+app.get('/me', auth.ensure, ui.me);
 
 // api
 app.get('/api/1/me/tags', api.getTags);
 app.get('/api/1/me/items/:tag/:day', api.getItems);
 
 // analytics
-app.get('/api/1/me/analyse/items', ensureAuthenticated, analyse.getitems);
-app.get('/api/1/me/analyse/items/:tag', ensureAuthenticated, analyse.getitemsbytag);
+app.get('/api/1/me/analyse/items', auth.ensure, analyse.getitems);
+app.get('/api/1/me/analyse/items/:tag', auth.ensure, analyse.getitemsbytag);
 
 // posts
 app.post('/api/1/me/register', api.register);
