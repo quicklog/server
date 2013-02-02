@@ -1,4 +1,5 @@
 # Quicklog Server
+[![Build Status](https://travis-ci.org/quicklog/server.png?branch=master)](https://travis-ci.org/quicklog/server)
 
 Server side for quicklog
 
