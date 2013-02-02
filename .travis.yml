@@ -8,3 +8,7 @@ notifications:
       - james@thebloomers.co.uk
     on_success: change
     on_failure: always
+services:
+  - mongodb
+before_script:
+  - mongo quicklog-test --eval 'db.addUser("user", "password");'
