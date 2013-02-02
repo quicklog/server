@@ -31,10 +31,20 @@ describe('users', function() {
       });
     });
   });
-  it('calling byEmailAndPassword with invalid password should return null', function(done) {
+  it('calling byEmailAndPassword with invalid password should return false', function(done) {
     users.add('user', 'password', function() {
       users.byEmailAndPassword('user', 'wrong', function(e, u) {
-        assert.equal(null, u);
+        assert.equal(null, e);
+        assert.equal(null, false);
+        return done(e);
+      });
+    });
+  });
+  it('calling byEmailAndPassword with invalid user should return false', function(done) {
+    users.add('user', 'password', function() {
+      users.byEmailAndPassword('wrong', 'wrong', function(e, u) {
+        assert.equal(null, e);
+        assert.equal(null, false);
         return done(e);
       });
     });

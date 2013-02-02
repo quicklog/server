@@ -1,5 +1,4 @@
-var authentication = require('./lib/authentication.js')
-  , data = require('./lib/data.js')
+var data = require('./lib/data.js')
   , express = require('express')
   , api = require('./routes/api')
   , flash = require('connect-flash')
@@ -8,6 +7,7 @@ var authentication = require('./lib/authentication.js')
   , http = require('http')
   , path = require('path')
   , passport = require('passport')
+  , users = require('./lib/users.js')
   , LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
@@ -33,12 +33,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-// TODO wire in auth
+var ensureAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated()) { 
+    return next(); 
+  }
+  
+  return res.redirect('/');
+};
+
 // ui
 app.get('/', ui.index);
-app.get('/me', authentication.ensureAuthenticated, ui.me);
-app.get('/me/procedures/all', ui.all);
+app.get('/me', ensureAuthenticated, ui.me);
 
+// TODO wire in auth
 // api
 app.get('/api/1/me/tags', api.getTags);
 app.get('/api/1/me/items/:tag/:day', api.getItems);
@@ -52,26 +59,11 @@ app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 
 // auth
-// TODO put callback in seperate module as above
-app.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { 
-      return next(err); 
-    }
-
-    if (!user) {
-      req.flash('error', info.message);
-      return res.redirect('/')
-    }
-
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      // return res.redirect('/' + user.username);
-      return res.redirect('/me');
-    });
-
-  })(req, res, next);
-});
+app.post('/login', 
+  passport.authenticate('local', { successRedirect: '/me',
+                                   failureRedirect: '/',
+                                   failureFlash: true })
+);
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -94,21 +86,16 @@ data.open(function(e) {
 });
 
 // authentication
-// TODO tests
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.email);
 });
 
 passport.deserializeUser(function(id, done) {
-  authentication.findById(id, function (err, user) {
+  users.byEmail(id, function (err, user) {
     done(err, user);
   });
 });
 
-var theLocalStrategy = function(username, password, done) {
-  process.nextTick(function () {
-    authentication.strategy(username, password, done);
-  });
-};
-
-passport.use(new LocalStrategy(theLocalStrategy));
+passport.use(new LocalStrategy(function(username, password, done) {
+  users.byEmailAndPassword(username, password, done);
+}));
