@@ -45,14 +45,13 @@ var ensureAuthenticated = function(req, res, next) {
 app.get('/', ui.index);
 app.get('/me', ensureAuthenticated, ui.me);
 
-// TODO wire in auth
 // api
 app.get('/api/1/me/tags', api.getTags);
 app.get('/api/1/me/items/:tag/:day', api.getItems);
 
 // analytics
-app.get('/api/1/me/analyse/items', analyse.getitems);
-app.get('/api/1/me/analyse/items/:tag', analyse.getitemsbytag);
+app.get('/api/1/me/analyse/items', ensureAuthenticated, analyse.getitems);
+app.get('/api/1/me/analyse/items/:tag', ensureAuthenticated, analyse.getitemsbytag);
 
 // posts
 app.post('/api/1/me/register', api.register);
