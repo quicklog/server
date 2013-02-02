@@ -5,3 +5,10 @@ services:
   - mongodb
 before_script:
   - mongo quicklog-test --eval 'db.addUser("user", "password");'
+notifications:
+  email:
+    recipients:
+      - roy@roylines.co.uk
+      - james@thebloomers.co.uk
+    on_success: [change]
+    on_failure: [always]
