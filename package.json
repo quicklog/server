@@ -20,7 +20,7 @@
     },
     "main": "./lib/server",
     "scripts": {
-        "test": "mocha"
+        "test": "mocha --reporter spec"
     },
     "engines": {
        "node": "0.8.x",

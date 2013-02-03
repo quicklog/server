@@ -35,7 +35,7 @@ describe('users', function() {
     users.add('user', 'password', function() {
       users.byEmailAndPassword('user', 'wrong', function(e, u) {
         assert.equal(null, e);
-        assert.equal(null, false);
+        assert.equal(false, u);
         return done(e);
       });
     });
@@ -44,7 +44,7 @@ describe('users', function() {
     users.add('user', 'password', function() {
       users.byEmailAndPassword('wrong', 'wrong', function(e, u) {
         assert.equal(null, e);
-        assert.equal(null, false);
+        assert.equal(false, u);
         return done(e);
       });
     });
