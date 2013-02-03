@@ -5,25 +5,27 @@
 <% include header %>
 	</head>
 	<body>
-    	<legend><img src='/img/quicklog.png'/>Procedure: <span id="procedure"></span><select class="pull-right" id="tag" ></select></legend>
-	<div><b>Performed: </b><span id="total"></span></div>
-	<div><b>Average Rating: </b><i class="icon-star"/></i><i class="icon-star"/></i><i class="icon-star"/></i><i class="icon-star"/></i></div>
+    <legend>
+      <img src='/img/quicklog.png'/>Procedure: <span id="procedure"></span><select class="pull-right" id="tag" ><select>
+    </legend>
+	  <div><b>Performed: </b><span id="total"></span></div>
+	  <div><b>Average Rating: </b><i class="icon-star"/></i><i class="icon-star"/></i><i class="icon-star"/></i><i class="icon-star"/></i></div>
 
-	<div id="container" style="height:300px; min-width:500px;"></div>
- 	<table class="table">
+	  <div id="container" style="height:300px; min-width:500px;"></div>
+ 	  <table class="table">
   		<thead>
   			<tr><th id="commentsDate"></th></tr>
     		<tr>
       			<th>Time</th>
       			<th>Rating</th>
-                        <th>Comment</th>
+            <th>Comment</th>
     		</tr>
   		</thead>
   		<tbody id="comments">
         </tbody>
     </table>
-	<script>
-		documentReady();
-	</script>
+	  <script>
+		  documentReady();
+	  </script>
 	</body>
 </html>
