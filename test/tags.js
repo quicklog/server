@@ -63,4 +63,17 @@ describe('tags', function() {
       });
     });
   });
+  it('calling all should return sorted list', function(done) {
+    tags.addMany('TESTUSER', ['a','c', 'b','d'], function(e) {
+      tags.all('TESTUSER', function(e, data) {
+        assert.equal(4, data.length);
+        assert.equal('a', data[0]);
+        assert.equal('b', data[1]);
+        assert.equal('c', data[2]);
+        assert.equal('d', data[3]);
+        done(e);
+      });
+    });
+  });
+
 });
