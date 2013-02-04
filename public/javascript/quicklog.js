@@ -19,7 +19,7 @@ var appendComment = function(time, rating, comment) {
 var getRating = function(item) {
 	var rating = '';
 	var starCount = item.rating;
-	
+
 	while(starCount > 0) {
 		rating = rating + '<i class="icon-star"/></i> ';
 		--starCount;
@@ -32,7 +32,7 @@ var setComments = function(tag, day) {
 	$.getJSON('/api/1/me/items/' + tag + '/' + day + '/', function(items) {
 		clearComments();
 		setCommentsDate(items);
-		
+
 		items.forEach(function(item, i) {
 			var time = moment(parseInt(item.timestamp)).format('HH:mm:ss');
 			var comment = item.comment;
@@ -96,10 +96,10 @@ var setTitle = function(name) {
 
 var setTotal = function(items) {
 	var total = _.reduce(
-		items.counts, 
+		items.counts,
 		function(memo, num) {
 			return memo + num[1];
-		}, 
+		},
 		0);
 
 	$('#total').text(total);
@@ -121,10 +121,10 @@ var appendTag = function(tag) {
 	$('#tag').append('<option value="' + tag + '">' + tag + '</option>');
 };
 
-var getItems = function(done) {
-	$.getJSON('/api/1/me/analyse/items', function(items) {
+var getTags = function(done) {
+	$.getJSON('/api/1/me/tags', function(items) {
 		items.forEach(function(item, i) {
-			appendTag(item.x);
+			appendTag(item);
 		});
 
 		done();
@@ -134,7 +134,7 @@ var getItems = function(done) {
 var documentReady = function() {
 	$(document).ready(function() {
 
-		getItems(getItemsForTag);
+		getTags(getItemsForTag);
 
 		$('#tag').change(function() {
 			getItemsForTag();
