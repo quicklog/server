@@ -39,7 +39,7 @@ app.get('/', ui.index);
 app.get('/me', auth.ensure, ui.me);
 
 // api
-app.get('/api/1/me/tags', api.getTags);
+app.get('/api/1/me/tags', auth.ensure, api.getTags);
 app.get('/api/1/me/items/:tag/:day', api.getItems);
 
 // analytics
@@ -51,7 +51,7 @@ app.post('/api/1/me/register', api.register);
 app.post('/api/1/me/items', api.addItems);
 
 // auth
-app.post('/login', 
+app.post('/login',
   passport.authenticate('local', { successRedirect: '/me',
                                    failureRedirect: '/',
                                    failureFlash: true })
