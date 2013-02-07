@@ -23,10 +23,10 @@ describe('authentication', function() {
 
 		it('should call next', function(done) {
 			var res = {};
-			var req = { 
-				isAuthenticated : function() { return false; },
-				header: function(name) { return 'TOKEN'; }
-			};
+			var req = sinon.stub();
+			req.header = function(){};
+			sinon.stub(req, 'header').withArgs('usertoken').returns('TOKEN');
+			req.isAuthenticated = function(){ return false;};
 
 			auth.ensure(req, res, done);
 		});
@@ -35,10 +35,10 @@ describe('authentication', function() {
 	describe('when request not authenticated and has no token', function() {
 		it('should redirect', function(done) {
 			var res = { redirect : function(path) { done() }};
-			var req = { 
-				isAuthenticated : function() { return false; },
-				header: function(name) { return null; }
-			};
+			var req = sinon.stub();
+			req.header = function(){};
+			sinon.stub(req, 'header').withArgs('usertoken').returns(null);
+			req.isAuthenticated = function(){ return false;};
 
 			auth.ensure(req, res, function() {
 				assert(false, 'should not call next');
@@ -57,10 +57,11 @@ describe('authentication', function() {
 
 		it('should call redirect', function(done) {
 			var res = { redirect : function(path) { done() }};
-			var req = { 
-				isAuthenticated : function() { return false; },
-				header: function(name) { return 'TOKEN'; }
-			};
+
+			var req = sinon.stub();
+			req.header = function(){};
+			sinon.stub(req, 'header').withArgs('usertoken').returns('TOKEN');
+			req.isAuthenticated = function(){ return false;};
 
 			auth.ensure(req, res, function() {
 				assert(false, 'should not call next');
