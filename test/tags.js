@@ -13,13 +13,21 @@ describe('tags', function() {
   it('calling add should not throw', function(done) {
     tags.add('TESTUSER', 'tag1' , done);
   });
+  it('calling add should return new document', function(done) {
+    tags.add('TESTUSER', 'tag1' , function(e, doc) {
+      assert.notEqual('', doc._id);
+      assert.equal('TESTUSER', doc.userid);
+      assert.equal('tag1', doc.name);
+      done(null);
+    });
+  });
   it('calling all should return empty', function(done) {
     tags.all('TESTUSER', function(e, data) {
       assert.equal(0, data.length);
       done(e);
     });
   });
-  it('calling add should add it', function(done) {
+  it('calling add should add', function(done) {
     tags.add('TESTUSER', 'tag1', function(e) {
       tags.all('TESTUSER', function(e, data) {
         assert.equal(1, data.length);
@@ -38,11 +46,24 @@ describe('tags', function() {
       });
     });
   });
-  it('calling add twice should append', function(done) {
+  it('calling add twice with different tag should append', function(done) {
     tags.add('TESTUSER', 'tag1', function(e) {
       tags.add('TESTUSER', 'tag2', function(e) {
         tags.all('TESTUSER', function(e, data) {
           assert.equal(2, data.length);
+          done(e);
+        });
+      });
+    });
+  });
+  it('calling add twice with same tag should not append', function(done) {
+    tags.add('TESTUSER', 'tag1', function(e, d) {
+      var id = d._id;
+      tags.add('TESTUSER', 'tag1', function(e, d) {
+        assert.deepEqual(id, d._id);
+        tags.all('TESTUSER', function(e, d) {
+          assert.equal(1, d.length);
+          assert.equal("tag1", d[0]);
           done(e);
         });
       });
