@@ -15,6 +15,9 @@ helper.deleteCollections = function(done) {
         data.client.dropCollection(data.collections.users, function() { cb(); });
       },
       function(cb) {
+        data.client.dropCollection(data.collections.tags, function() { cb(); });
+      },
+      function(cb) {
         data.client.dropCollection(data.collections.itemDay, function() { cb(); });
       },
       function(cb) {

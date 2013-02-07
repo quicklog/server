@@ -46,7 +46,7 @@ var send = function() {
   var item = data.pop();
   if(item) {
     var options = {
-      headers: { 'USERTOKEN': 'THEUSER' },
+      headers: { 'USERTOKEN': '575a8080-3e30-461d-b3fa-76d7bf108c4c' },
       url: addItemUrl,
       json: item
     };
