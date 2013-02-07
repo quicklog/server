@@ -21,14 +21,17 @@ describe('authentication', function() {
 			users.byToken.restore();
 		});
 
-		it('should call next', function(done) {
+		it('should set user and call next', function(done) {
 			var res = {};
 			var req = sinon.stub();
 			req.header = function(){};
 			sinon.stub(req, 'header').withArgs('usertoken').returns('TOKEN');
 			req.isAuthenticated = function(){ return false;};
 
-			auth.ensure(req, res, done);
+			auth.ensure(req, res, function() {
+				assert.equal(req.user, 'USER');
+				done();
+			});
 		});
 	});
 
