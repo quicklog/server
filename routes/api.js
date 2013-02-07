@@ -1,11 +1,23 @@
 var data = require('../lib/data.js'),
       items = require('../lib/items.js'),
-      tags = require('../lib/tags.js');
+      tags = require('../lib/tags.js'),
+      users = require('../lib/users.js');
 
 var api = {};
 
-api.register = function(req, res) {
-  res.send('USERTOKEN');
+api.authenticate = function(req, res) {
+  var email = req.header('email');
+  var password = req.header('password');
+  if(!email || !password) {
+    return res.send(404);
+  }
+
+  users.byEmailAndPassword(email, password, function(e, u) {
+    if(e) {
+      return res.send(404);
+    }
+    return res.send(u.token);
+  });
 };
 
 api.getTags = function(req, res) {

@@ -47,7 +47,7 @@ app.get('/api/1/me/analyse/items', auth.ensure, analyse.getitems);
 app.get('/api/1/me/analyse/items/:tag', auth.ensure, analyse.getitemsbytag);
 
 // posts
-app.post('/api/1/me/register', api.register);
+app.post('/api/1/me/device/authenticate', api.authenticate);
 app.post('/api/1/me/items', api.addItems);
 
 // auth

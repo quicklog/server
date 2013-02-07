@@ -42,11 +42,11 @@ while(currentDay < moment()) {
     }
 }
 
-var send = function() {
+var send = function(token) {
   var item = data.pop();
   if(item) {
     var options = {
-      headers: { 'USERTOKEN': '575a8080-3e30-461d-b3fa-76d7bf108c4c' },
+      headers: { 'USERTOKEN': token },
       url: addItemUrl,
       json: item
     };
@@ -62,7 +62,7 @@ var send = function() {
         if(response.statusCode != 200) {
           console.error('ERROR: status code: ' + response.statusCode);
         } else {
-          send();
+          send(token);
         }
       }
     });
@@ -70,4 +70,5 @@ var send = function() {
 };
 
 console.log('loading...');
-send();
+
+send('ABCDS');
