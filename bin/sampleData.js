@@ -26,13 +26,13 @@ while(currentDay < moment()) {
     if(_.random(0, 10) < 5) {
         comment = '';
     }
-    var json = [{
+    var json = {
         id: id,
         tags: [procedure],
         comment: comment,
         rating: _.random(1, 5),
         timestamp: currentDay.valueOf()
-    }];
+    };
 
     data.push(json);
 
@@ -48,31 +48,55 @@ while(currentDay < moment()) {
 }
 
 var send = function(token) {
-  var item = data.pop();
-  if(item) {
-    var options = {
-      headers: { 'USERTOKEN': token },
-      url: addItemUrl,
-      json: item
-    };
+  var options = {
+    headers: { 'USERTOKEN': token },
+    url: addItemUrl,
+    json: data
+  };
 
-    console.log('adding: ' + item[0].id + ' to ' + host);
+  request.post(options, function(e, response) {
+    if(e) {
+      console.error(e);
+      return process.exit(1);
+    }
+    else
+    {
+      if(response.statusCode != 200) {
+        console.error('ERROR: status code: ' + response.statusCode);
+        return process.exit(1);
+      }
 
-    request.post(options, function(e, response) {
-      if(e) {
-        console.error(e);
-      }
-      else
-      {
-        if(response.statusCode != 200) {
-          console.error('ERROR: status code: ' + response.statusCode);
-        } else {
-          send(token);
-        }
-      }
-    });
-  }
+      return process.exit(0);
+    }
+  });
 };
+
+// var send = function(token) {
+//   var item = data.pop();
+//   if(item) {
+//     var options = {
+//       headers: { 'USERTOKEN': token },
+//       url: addItemUrl,
+//       json: item
+//     };
+
+//     console.log('adding: ' + item[0].id + ' to ' + host);
+
+//     request.post(options, function(e, response) {
+//       if(e) {
+//         console.error(e);
+//       }
+//       else
+//       {
+//         if(response.statusCode != 200) {
+//           console.error('ERROR: status code: ' + response.statusCode);
+//         } else {
+//           send(token);
+//         }
+//       }
+//     });
+//   }
+// };
 
 console.log('getting token');
 
