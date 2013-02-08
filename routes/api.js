@@ -51,11 +51,6 @@ api.getItems = function(req, res) {
 };
 
 api.addItems = function(req, res) {
-  if(!req.headers['usertoken']) {
-    console.error('missing header [usertoken]');
-    return res.send('you are not authenticated to use this service', 500);
-  }
-
   if(!req.body) {
     console.error('missing items in body');
     return res.send('no items found in message body', 500);
