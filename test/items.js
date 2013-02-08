@@ -50,6 +50,8 @@ describe('items', function() {
       tags.allAggregations('TESTUSER', 'tag1', function(e, data) {
         assert.equal(1, data.length);
         assert.equal(1, data[0].sumProcedures);
+        assert.equal(2, data[0].sumFailures);
+        assert.equal(4, data[0].sumRatings);
         assert.equal(1359417600000, data[0].day);
         assert.deepEqual(sampleItems[0].tag._id, data[0].tagid);
         done(e);

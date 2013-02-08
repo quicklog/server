@@ -31,6 +31,7 @@ while(currentDay < moment()) {
         tags: [procedure],
         comment: comment,
         rating: _.random(1, 5),
+        attempts: _.random(1, 3),
         timestamp: currentDay.valueOf()
     };
 
