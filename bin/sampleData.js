@@ -5,8 +5,13 @@ var _ = require('underscore'),
 
 var numberOfDays = 30;
 
-var host = process.argv[2] || 'localhost:5000';
-var addItemUrl  = 'http://' + host + '/api/1/me/items';
+var email = process.argv[2] || 'demo';
+var password = process.argv[3] || 'demo';
+var host = process.argv[4] || 'localhost:5000';
+
+var meUrl  = 'http://' + host + '/api/1/me';
+var getTokenUrl  = meUrl + '/token';
+var addItemUrl  = meUrl + '/items';
 
 var currentDay = moment().sod().subtract('days', numberOfDays).add('hours', 8);
 var procedures = ["Blood Test", "Cannula", "Catheter", "Blood Cultures", "Chest Drain"];
@@ -69,6 +74,22 @@ var send = function(token) {
   }
 };
 
-console.log('loading...');
+console.log('getting token');
 
-send('ABCDS');
+var options = {
+      headers: { email: email, password: password },
+      url: getTokenUrl
+};
+
+request.get(options, function(e, response) {
+  if(e) {
+    console.error(e);
+    process.exit(1);
+  }
+  if(response.statusCode != 200) {
+    console.error('ERROR: status code: ' + response.statusCode);
+  } else {
+    console.log('obtained token' + response.body);
+    send(response.body);
+  }
+});

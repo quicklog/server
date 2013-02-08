@@ -3,7 +3,7 @@ var assert = require('assert'),
 	sinon = require('sinon'),
 	users = require('../lib/users.js');
 
-describe('authenticate', function() {
+describe('getToken', function() {
 	var req = {};
 	var res = {};
 	beforeEach(function() {
@@ -21,19 +21,26 @@ describe('authenticate', function() {
 
 	it('should 404 if missing email', function() {
 		req.header.withArgs('password').returns('1234');
-		api.authenticate(req, res);
+		api.getToken(req, res);
 		assert(res.send.calledWith(404));
 	});
 	it('should 404 if missing password', function() {
 		req.header.withArgs('email').returns('a@a.a');
-		api.authenticate(req, res);
+		api.getToken(req, res);
+		assert(res.send.calledWith(404));
+	});
+	it('should 404 if authentication errors', function() {
+		req.header.withArgs('email').returns('a@a.a');
+		req.header.withArgs('password').returns('1234');
+		users.byEmailAndPassword.withArgs('a@a.a', '1234').yields('ERROR');
+		api.getToken(req, res);
 		assert(res.send.calledWith(404));
 	});
 	it('should 404 if authentication fails', function() {
 		req.header.withArgs('email').returns('a@a.a');
 		req.header.withArgs('password').returns('1234');
-		users.byEmailAndPassword.withArgs('a@a.a', '1234').yields('ERROR');
-		api.authenticate(req, res);
+		users.byEmailAndPassword.withArgs('a@a.a', '1234').yields(null, false);
+		api.getToken(req, res);
 		assert(res.send.calledWith(404));
 	});
 	it('should return token if valid credentials', function() {
@@ -41,7 +48,7 @@ describe('authenticate', function() {
 		req.header.withArgs('password').returns('1234');
 		var user = { token: 'TOKEN' };
 		users.byEmailAndPassword.withArgs('a@a.a', '1234').yields(null, user);
-		api.authenticate(req, res);
+		api.getToken(req, res);
 		assert(res.send.calledWith('TOKEN'));
 	});
 });

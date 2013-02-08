@@ -39,16 +39,16 @@ app.get('/', ui.index);
 app.get('/me', auth.ensure, ui.me);
 
 // api
+app.get('/api/1/me/token', api.getToken);
 app.get('/api/1/me/tags', auth.ensure, api.getTags);
-app.get('/api/1/me/items/:tag/:day', api.getItems);
+app.get('/api/1/me/items/:tag/:day', auth.ensure, api.getItems);
 
 // analytics
 app.get('/api/1/me/analyse/items', auth.ensure, analyse.getitems);
 app.get('/api/1/me/analyse/items/:tag', auth.ensure, analyse.getitemsbytag);
 
 // posts
-app.post('/api/1/me/device/authenticate', api.authenticate);
-app.post('/api/1/me/items', api.addItems);
+app.post('/api/1/me/items', auth.ensure, api.addItems);
 
 // auth
 app.post('/login',
