@@ -13,7 +13,7 @@ var meUrl  = 'http://' + host + '/api/1/me';
 var getTokenUrl  = meUrl + '/token';
 var addItemUrl  = meUrl + '/items';
 
-var currentDay = moment().sod().subtract('days', numberOfDays).add('hours', 8);
+var currentDay = moment().startOf('day').subtract('days', numberOfDays).add('hours', 8);
 var procedures = ["Blood Test", "Cannula", "Catheter", "Blood Cultures", "Chest Drain"];
 var comments = ["", "difficult patient", "awkward parents", "rushed", "happy", "no comment", ""];
 
@@ -71,33 +71,6 @@ var send = function(token) {
   });
 };
 
-// var send = function(token) {
-//   var item = data.pop();
-//   if(item) {
-//     var options = {
-//       headers: { 'USERTOKEN': token },
-//       url: addItemUrl,
-//       json: item
-//     };
-
-//     console.log('adding: ' + item[0].id + ' to ' + host);
-
-//     request.post(options, function(e, response) {
-//       if(e) {
-//         console.error(e);
-//       }
-//       else
-//       {
-//         if(response.statusCode != 200) {
-//           console.error('ERROR: status code: ' + response.statusCode);
-//         } else {
-//           send(token);
-//         }
-//       }
-//     });
-//   }
-// };
-
 console.log('getting token');
 
 var options = {
@@ -113,7 +86,7 @@ request.get(options, function(e, response) {
   if(response.statusCode != 200) {
     console.error('ERROR: status code: ' + response.statusCode);
   } else {
-    console.log('obtained token' + response.body);
+    console.log('obtained token: ' + response.body);
     send(response.body);
   }
 });
