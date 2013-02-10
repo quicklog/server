@@ -1,19 +1,19 @@
-var auth = require('./lib/authentication.js')
-  , data = require('./lib/data.js')
-  , express = require('express')
-  , api = require('./routes/api')
-  , flash = require('connect-flash')
-  , ui = require('./routes/ui')
-  , analyse = require('./routes/analyse')
-  , http = require('http')
-  , path = require('path')
-  , passport = require('passport')
-  , users = require('./lib/users.js')
-  , LocalStrategy = require('passport-local').Strategy;
+var auth = require('./lib/authentication.js'),
+  data = require('./lib/data.js'),
+  express = require('express'),
+  api = require('./routes/api'),
+  flash = require('connect-flash'),
+  ui = require('./routes/ui'),
+  analyse = require('./routes/analyse'),
+  http = require('http'),
+  path = require('path'),
+  passport = require('passport'),
+  users = require('./lib/users.js'),
+  LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
-app.configure(function(){
+app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -22,7 +22,9 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'industry under realize band' }));
+  app.use(express.session({
+    secret: 'industry under realize band'
+  }));
   app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
@@ -30,7 +32,7 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
@@ -51,13 +53,13 @@ app.get('/api/1/me/analyse/items/:tag', auth.ensure, analyse.getitemsbytag);
 app.post('/api/1/me/items', auth.ensure, api.addItems);
 
 // auth
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/me',
-                                   failureRedirect: '/',
-                                   failureFlash: true })
-);
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/me',
+  failureRedirect: '/',
+  failureFlash: true
+}));
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
@@ -72,7 +74,7 @@ data.open(function(e) {
   }
 
   console.log('starting server');
-  http.createServer(app).listen(app.get('port'), function(){
+  http.createServer(app).listen(app.get('port'), function() {
     console.log("Express server listening on port " + app.get('port'));
   });
 });
@@ -83,7 +85,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  users.byEmail(id, function (err, user) {
+  users.byEmail(id, function(err, user) {
     done(err, user);
   });
 });
