@@ -4,7 +4,6 @@ var auth = require('./lib/authentication.js'),
   api = require('./routes/api'),
   flash = require('connect-flash'),
   ui = require('./routes/ui'),
-  analyse = require('./routes/analyse'),
   http = require('http'),
   path = require('path'),
   passport = require('passport'),
@@ -22,9 +21,7 @@ app.configure(function() {
   app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.session({
-    secret: 'industry under realize band'
-  }));
+  app.use(express.session({ secret: 'industry under realize band' }));
   app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
@@ -44,12 +41,9 @@ app.get('/me', auth.ensure, ui.me);
 app.get('/api/1/me/token', api.getToken);
 app.get('/api/1/me/tags', auth.ensure, api.getTags);
 app.get('/api/1/me/items/:tag/:day', auth.ensure, api.getItems);
+app.get('/api/1/me/analyse/items', auth.ensure, api.getitems);
+app.get('/api/1/me/analyse/items/:tag', auth.ensure, api.getitemsbytag);
 
-// analytics
-app.get('/api/1/me/analyse/items', auth.ensure, analyse.getitems);
-app.get('/api/1/me/analyse/items/:tag', auth.ensure, analyse.getitemsbytag);
-
-// posts
 app.post('/api/1/me/items', auth.ensure, api.addItems);
 
 // auth
@@ -63,7 +57,6 @@ app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
-
 
 console.log('opening database ' + data.configuration().database + ' on ' + data.configuration().host);
 data.open(function(e) {
