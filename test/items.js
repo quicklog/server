@@ -8,6 +8,7 @@ var sampleItems = [{
     id: 'ID',
     tags: ['tag1'],
     comment: 'COMMENT',
+    attempts: 1,
     rating: 4,
     timestamp: 1359486450504
 }];

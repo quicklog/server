@@ -1,7 +1,7 @@
 var assert = require('assert'),
-      helper = require('./helper.js'),
-      tags = require('../lib/tags.js'),
-      sinon = require('sinon');
+  helper = require('./helper.js'),
+  tags = require('../lib/tags.js'),
+  sinon = require('sinon');
 
 describe('tags', function() {
   beforeEach(function(done) {
@@ -11,10 +11,10 @@ describe('tags', function() {
     return helper.closeConnection(done);
   });
   it('calling add should not throw', function(done) {
-    tags.add('TESTUSER', 'tag1' , done);
+    tags.add('TESTUSER', 'tag1', done);
   });
   it('calling add should return new document', function(done) {
-    tags.add('TESTUSER', 'tag1' , function(e, doc) {
+    tags.add('TESTUSER', 'tag1', function(e, doc) {
       assert.notEqual('', doc._id);
       assert.equal('TESTUSER', doc.userid);
       assert.equal('tag1', doc.name);
@@ -27,6 +27,23 @@ describe('tags', function() {
       done(e);
     });
   });
+  it('calling get should not throw', function(done) {
+    tags.get('TESTUSER', 'tag', done);
+  });
+  it('calling get with missing tag should return null', function(done) {
+    tags.get('TESTUSER', 'tag', function(e, data) {
+      assert.equal(null, data);
+      done(e);
+    });
+  });
+  it('calling get with valid tag return it', function(done) {
+    tags.add('TESTUSER', 'tag1', function(e) {
+      tags.get('TESTUSER', 'tag1', function(e, data) {
+        assert.deepEqual({_id:'17e3a32961bd2482c193988562894120',name:'tag1',userid:'TESTUSER'}, data);
+        done(e);
+      });
+    });
+  });
   it('calling add should add', function(done) {
     tags.add('TESTUSER', 'tag1', function(e) {
       tags.all('TESTUSER', function(e, data) {
@@ -37,7 +54,7 @@ describe('tags', function() {
     });
   });
   it('calling addMany should add add all', function(done) {
-    tags.addMany('TESTUSER', ['tag1','tag2'], function(e) {
+    tags.addMany('TESTUSER', ['tag1', 'tag2'], function(e) {
       tags.all('TESTUSER', function(e, data) {
         assert.equal(2, data.length);
         assert.equal('tag1', data[0]);
@@ -85,7 +102,7 @@ describe('tags', function() {
     });
   });
   it('calling all should return sorted list', function(done) {
-    tags.addMany('TESTUSER', ['a','c', 'b','d'], function(e) {
+    tags.addMany('TESTUSER', ['a', 'c', 'b', 'd'], function(e) {
       tags.all('TESTUSER', function(e, data) {
         assert.equal(4, data.length);
         assert.equal('a', data[0]);

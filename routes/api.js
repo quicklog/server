@@ -67,17 +67,7 @@ api.addItems = function(req, res) {
   });
 };
 
-api.getAllItemCounts = function(req, res) {
-  analytics.getAllCounts(req.user._id, function(e, data) {
-    if(e) {
-      console.error(e);
-      res.send(500);
-    }
-    res.send(data);
-  });
-};
-
-api.getItemsByTag = function(req, res) {
+api.analyseItemsByTag = function(req, res) {
   var tag = req.params.tag;
 
   analytics.getTagCounts(req.user._id, tag, function(e, data) {
