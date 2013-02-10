@@ -11,7 +11,7 @@ describe('calling open', function() {
     data.close();
   });
   it('should connect', function(done) {
-    setTimeout(done, 300);
+    setTimeout(done, 1000);
     data.open(function(e) {
       assert.notEqual(null, data.client);
       assert.notEqual(undefined, data.client);
