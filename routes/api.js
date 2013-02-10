@@ -1,7 +1,8 @@
-var data = require('../lib/data.js'),
-      items = require('../lib/items.js'),
-      tags = require('../lib/tags.js'),
-      users = require('../lib/users.js');
+var analytics = require('../lib/analytics'),
+      data = require('../lib/data'),
+      items = require('../lib/items'),
+      tags = require('../lib/tags'),
+      users = require('../lib/users');
 
 var api = {};
 
@@ -40,7 +41,7 @@ api.getItems = function(req, res) {
   var tag = req.params.tag;
   var day = req.params.day;
 
-  data.getItems(req.user._id, tag, day, function(e, items) {
+  analytics.getItems(req.user._id, tag, day, function(e, items) {
     if(e) {
       console.error(e);
       return res.send(500);
@@ -66,8 +67,8 @@ api.addItems = function(req, res) {
   });
 };
 
-api.getitems = function(req, res) {
-  data.getAllCounts(req.user._id, function(e, data) {
+api.getAllItemCounts = function(req, res) {
+  analytics.getAllCounts(req.user._id, function(e, data) {
     if(e) {
       console.error(e);
       res.send(500);
@@ -76,10 +77,10 @@ api.getitems = function(req, res) {
   });
 };
 
-api.getitemsbytag = function(req, res) {
+api.getItemsByTag = function(req, res) {
   var tag = req.params.tag;
 
-  data.getTagCounts(req.user._id, tag, function(e, data) {
+  analytics.getTagCounts(req.user._id, tag, function(e, data) {
     if(e) {
       console.error(e);
       res.send(500);

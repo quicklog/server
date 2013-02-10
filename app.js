@@ -41,8 +41,8 @@ app.get('/me', auth.ensure, ui.me);
 app.get('/api/1/me/token', api.getToken);
 app.get('/api/1/me/tags', auth.ensure, api.getTags);
 app.get('/api/1/me/items/:tag/:day', auth.ensure, api.getItems);
-app.get('/api/1/me/analyse/items', auth.ensure, api.getitems);
-app.get('/api/1/me/analyse/items/:tag', auth.ensure, api.getitemsbytag);
+app.get('/api/1/me/analyse/items', auth.ensure, api.getAllItemCounts);
+app.get('/api/1/me/analyse/items/:tag', auth.ensure, api.getItemsByTag);
 
 app.post('/api/1/me/items', auth.ensure, api.addItems);
 
