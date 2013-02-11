@@ -7,7 +7,7 @@ var analytics = require('../lib/analytics.js'),
 
 describe('analytics', function() {
   var user = 'TESTUSER';
-  var startTimestamp =  1318781876406;
+  var startTimestamp = 1318781876406;
   var startDay = moment(startTimestamp).startOf('day').valueOf();
   var anotherTimestamp = moment(startTimestamp).add('days', 1).valueOf();
   var anotherDay = moment(anotherTimestamp).startOf('day').valueOf();
@@ -20,6 +20,36 @@ describe('analytics', function() {
   });
   it('calling getItems not throw', function(done) {
     analytics.getItems(user, 'tag', 0, done);
+  });
+  it('calling getItems with empty data should return expected', function(done) {
+    analytics.getItems(user, 'tag', startDay, function(e, d) {
+      var expected = [];
+      assert.deepEqual(d, expected);
+      return done();
+    });
+  });
+  it('calling getItems with one item with no failures should return expected', function(done) {
+    var sampleItems = [{
+      id: 'ID',
+      tags: ['tag'],
+      comment: 'COMMENT',
+      rating: 4,
+      attempts: 1,
+      timestamp: startTimestamp
+    }];
+    items.addMany(user, sampleItems, function() {
+      analytics.getItems(user, 'tag', startDay, function(e, d) {
+        var expected = [{
+          _id: "ID",
+          timestamp: 1318781876406,
+          comment: "COMMENT",
+          rating: 4,
+          failures: 0
+        }];
+        assert.deepEqual(d, expected);
+        return done();
+      });
+    });
   });
   it('calling getTagCounts not throw', function(done) {
     analytics.getTagCounts(user, 'tag', done);
@@ -52,7 +82,9 @@ describe('analytics', function() {
           counts: [
             [startDay, 1]
           ],
-          failures: [[startDay, 0]]
+          failures: [
+            [startDay, 0]
+          ]
         };
         assert.deepEqual(d, expected);
         return done();
@@ -93,16 +125,14 @@ describe('analytics', function() {
       rating: 4,
       attempts: 2,
       timestamp: startTimestamp
-    },
-    {
+    }, {
       id: 'ID2',
       tags: ['tag'],
       comment: 'COMMENT',
       rating: 2,
       attempts: 1,
       timestamp: startTimestamp
-    },
-      {
+    }, {
       id: 'ID3',
       tags: ['tag'],
       comment: 'COMMENT',
