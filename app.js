@@ -36,6 +36,7 @@ app.configure('development', function() {
 // ui
 app.get('/', ui.index);
 app.get('/me', auth.ensure, ui.me);
+app.get('/register', ui.register);
 
 // api
 app.get('/api/1/me/token', api.getToken);
@@ -46,6 +47,7 @@ app.get('/api/1/me/analyse/items/:tag', auth.ensure, api.analyseItemsByTag);
 app.post('/api/1/me/items', auth.ensure, api.addItems);
 
 // auth
+app.post('/doregister', auth.doregister);
 app.post('/login', passport.authenticate('local', {
   successRedirect: '/me',
   failureRedirect: '/',

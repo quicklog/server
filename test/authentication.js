@@ -71,4 +71,42 @@ describe('authentication', function() {
 			});
 		});
 	});
+
+	describe('when registering and user add succeeds', function() {
+		beforeEach(function() {
+			sinon.stub(users, 'add').yields(null);
+		});
+
+		afterEach(function() {
+			users.add.restore();
+		});
+
+		it('should redirect to root page', function() {
+			var req = { body : { username : 'USER', password : 'PASSWORD' } };
+			var res = { redirect : function() {} };
+			sinon.stub(res, 'redirect');
+			auth.doregister(req, res);
+			assert(res.redirect.calledOnce);
+			assert(res.redirect.calledWithExactly('/'));
+		});
+	});
+
+	describe('when registering and user add fails', function() {
+		beforeEach(function() {
+			sinon.stub(users, 'add').yields('ERROR');
+		});
+
+		afterEach(function() {
+			users.add.restore();
+		});
+
+		it('should redirect to root page', function() {
+			var req = { body : { username : 'USER', password : 'PASSWORD' } };
+			var res = { redirect : function() {} };
+			sinon.stub(res, 'redirect');
+			auth.doregister(req, res);
+			assert(res.redirect.calledOnce);
+			assert(res.redirect.calledWithExactly('/register'));
+		});
+	});
 });

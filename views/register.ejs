@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quicklog</title>
+    <% include header %>
+  </head>
+  <body class="primary">
+    <div class="hero-unit">
+      <header>
+        <img src='/img/quicklog.png'/>
+        <h1>Quicklog</h1>
+      </header>
+
+      <!-- TODO form validation -->
+      <form class="form-signin" action="/doregister" method="post">
+        <h2 class="form-signin-heading">Please fill in your details</h2>
+        <input name="username" type="text" class="input-large input-block-level" placeholder="Email address">
+        <input name="password" type="password" class="input-large input-block-level" placeholder="Password">
+        <input name="confirmpassword" type="password" class="input-large input-block-level" placeholder="Confirm password">
+        <button class="btn btn-large btn-primary" type="submit">Register</button>
+      </form>
+    </div>
+  </body>
+</html>
