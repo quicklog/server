@@ -7,7 +7,7 @@ exports.me = function(req, res) {
 };
 
 exports.register = function(req, res) {
-  res.render('register');
+  res.render('register', { message: req.flash('register') });
 };
 
 exports.all = function(req, res) {

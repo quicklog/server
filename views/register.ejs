@@ -19,6 +19,10 @@
         <input name="confirmpassword" type="password" class="input-large input-block-level" placeholder="Confirm password">
         <button class="btn btn-large btn-primary" type="submit">Register</button>
       </form>
+
+      <% if (locals.message) { %>
+          <%= message %>
+      <% } %>
     </div>
   </body>
 </html>
