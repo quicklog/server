@@ -138,3 +138,22 @@ var documentReady = function() {
 			});
 		});
 	};
+
+var validateRegistrationForm = function() {
+
+	if($('#username').val().length > 0 &&
+	   $('#password').val().length > 0 &&
+	   $('#confirmpassword').val().length > 0 &&
+	   $('#password').val() === $('#confirmpassword').val()) {
+		$('#submitbutton').removeAttr('disabled');
+	} else {
+		$('#submitbutton').attr('disabled', 'disabled');		
+	}
+};
+
+var registrationDocumentReady = function() {
+	validateRegistrationForm();
+	$('#username').keyup(validateRegistrationForm);
+	$('#password').keyup(validateRegistrationForm);
+	$('#confirmpassword').keyup(validateRegistrationForm);
+};

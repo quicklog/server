@@ -91,22 +91,60 @@ describe('authentication', function() {
 		});
 	});
 
-	describe('when registering and user add fails', function() {
+	describe('when registering and user add fails for reason other than user exists', function() {
+		var res, req;
+
 		beforeEach(function() {
 			sinon.stub(users, 'add').yields('ERROR');
+			sinon.stub(console, 'log');
+
+			req = { body : { username : 'USER', password : 'PASSWORD' } };
+			req.flash = sinon.stub();
+			res = { redirect : function() {} };
+			sinon.stub(res, 'redirect');
+			auth.doregister(req, res);
 		});
 
 		afterEach(function() {
 			users.add.restore();
+			console.log.restore();
 		});
 
 		it('should redirect to root page', function() {
+			assert(res.redirect.calledOnce);
+			assert(res.redirect.calledWithExactly('/register'));
+		});
+
+		it('should show user friendly error message', function() {
+			assert(res.redirect.calledOnce);
+			assert(res.redirect.calledWithExactly('/register'));
+
+			assert(req.flash.calledOnce);
+			assert.equal(req.flash.args[0][0], 'register');
+			assert.equal(req.flash.args[0][1], 'Registration failed with an unexpected error');
+		});
+	});
+
+	describe('when registering and user already exists', function() {
+		beforeEach(function() {
+			sinon.stub(users, 'add').yields({ err: 'E11000 duplicate key error index and some other stuff'});
+			sinon.stub(console, 'log');
+		});
+
+		afterEach(function() {
+			users.add.restore();
+			console.log.restore();
+		});
+
+		it('should raise message that tells the user', function() {
 			var req = { body : { username : 'USER', password : 'PASSWORD' } };
+			req.flash = sinon.stub();
 			var res = { redirect : function() {} };
 			sinon.stub(res, 'redirect');
 			auth.doregister(req, res);
-			assert(res.redirect.calledOnce);
-			assert(res.redirect.calledWithExactly('/register'));
+			assert(req.flash.calledOnce);
+			assert.equal(req.flash.args[0][0], 'register');
+			assert.equal(req.flash.args[0][1], 'Registration failed : email already exists');
 		});
 	});
 });

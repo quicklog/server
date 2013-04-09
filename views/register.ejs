@@ -3,6 +3,9 @@
   <head>
     <title>Quicklog</title>
     <% include header %>
+    <script>
+      $(document).ready(registrationDocumentReady);
+    </script>
   </head>
   <body class="primary">
     <div class="hero-unit">
@@ -11,17 +14,18 @@
         <h1>Quicklog</h1>
       </header>
 
-      <!-- TODO form validation -->
-      <form class="form-signin" action="/doregister" method="post">
+      <form id="registrationForm" class="form-signin" action="/doregister" method="post">
         <h2 class="form-signin-heading">Please fill in your details</h2>
-        <input name="username" type="text" class="input-large input-block-level" placeholder="Email address">
-        <input name="password" type="password" class="input-large input-block-level" placeholder="Password">
-        <input name="confirmpassword" type="password" class="input-large input-block-level" placeholder="Confirm password">
-        <button class="btn btn-large btn-primary" type="submit">Register</button>
+        <input id="username" name="username" class="input-large input-block-level" placeholder="Email address" type="email">
+        <input id="password" name="password" type="password" class="input-large input-block-level" placeholder="Password">
+        <input id="confirmpassword" name="confirmpassword" type="password" class="input-large input-block-level" placeholder="Confirm password" data-validation-matches-match="password" data-validation-matches-message="Must match the password entered above">
+        <button id="submitbutton" class="btn btn-large btn-primary" type="submit">Register</button> or <a href="/">Sign in</a>
       </form>
 
-      <% if (locals.message) { %>
+      <% if (locals.message && locals.message.length > 0) { %>
+        <div class="alert alert-error">
           <%= message %>
+        </div>
       <% } %>
     </div>
   </body>
